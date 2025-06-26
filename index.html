@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-TAC LED Backlit Panel Instruction Manual</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Ensure the container is styled for better PDF output */
+        .container {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Hide elements during printing */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            /* Ensure the container takes up the full page width for printing */
+            .container {
+                margin: 0 !important;
+                padding: 10px !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+    <!-- Progress Bar -->
+    <div id="progressContainer" class="fixed top-0 left-0 w-full h-5 z-[1000] hidden no-print">
+        <div class="h-5">
+            <div id="translationProgress" class="bg-blue-500 h-full transition-all duration-300 ease-in-out relative"
+                style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <span id="tickMark"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 text-green-500 text-base hidden">✔</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto my-auto px-4">
+        <!-- Language Dropdown, Download PDF Button, and Print Button -->
+        <div class="absolute top-5 right-5 flex space-x-4 no-print">
+            <select id="languageDropdown"
+                class="border border-blue-500 text-blue-500 px-4 py-2 rounded-md hover:bg-blue-50">
+                <option value="en">Select Language</option>
+                <option value="de">German</option>
+                <option value="fr">French</option>
+                <option value="it">Italian</option>
+                <option value="es">Spanish</option>
+                <option value="pt">Portuguese</option>
+                <option value="hr">Croatian</option>
+                <option value="cs">Czech</option>
+                <option value="hu">Hungarian</option>
+                <option value="pl">Polish</option>
+                <option value="bg">Bulgarian</option>
+                <option value="ro">Romanian</option>
+                <option value="el">Greek</option>
+            </select>
+
+            <button
+                class="px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 flex items-center justify-center"
+                onclick="location.reload();">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+            </button>
+
+            <button id="downloadPDFButton"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Download PDF</button>
+            <button id="printButton"
+                class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Print</button>
+        </div>
+
+        <!-- Page 1 -->
+        <!-- Header -->
+        <div class="flex justify-center items-center border-b-2 border-gray-800 p-4">
+            <img src="v-tac-logo.png" alt="" class="w-1/2 md:w-1/4">
+        </div>
+
+        <div class="flex flex-col items-center mb-8 m-5">
+            <h1 class="text-5xl font-bold uppercase text-center">Instruction Manual</h1>
+            <h2 class="text-4xl uppercase text-center">LED Backlit Panel</h2>
+            <p class="text-gray-600 text-right w-full">WEEE Number: 80133970</p>
+        </div>
+        <!-- Technical Data -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 uppercase">Technical Data</h3>
+                <table class="w-full border border-gray-300">
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Model</th>
+                        <td class="p-2">VT-61036</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">SKU</th>
+                        <td class="p-2">236246, 236256</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Power</th>
+                        <td class="p-2">36W</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Lumens</th>
+                        <td class="p-2">4320 Lm</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Beam Angle</th>
+                        <td class="p-2">110°</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">CRI</th>
+                        <td class="p-2">≥80</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">PF</th>
+                        <td class="p-2">≥0.9</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Life Span</th>
+                        <td class="p-2">50,000 Hours</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">On/Off Cycle</th>
+                        <td class="p-2">25,000 Times</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">IP Rating</th>
+                        <td class="p-2">IP20</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Operating Temperature</th>
+                        <td class="p-2">-10°C to +35°C</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="border-r p-2 text-left">Input Voltage</th>
+                        <td class="p-2">AC: 220-240V, 50/60Hz</td>
+                    </tr>
+                    <tr>
+                        <th class="border-r p-2 text-left">Dimension</th>
+                        <td class="p-2">595x595x33 mm</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="bg-red-500 h-70% w-70% flex items-center justify-center mb-2 mt-6">
+                    <img src="vt-61036.png" alt="LED Panel Image" class="h-full w-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Introduction & Warranty -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold mb-4 uppercase">Introduction & Warranty</h3>
+            <p class="text-gray-700 text-justify">
+                Thank you for selecting and buying V-TAC product. V-TAC will serve you the best. Please read these
+                instructions carefully before starting the installation and keep this manual handy for future reference.
+                If you have any another query, please contact our dealer or local vendor from whom you have purchased
+                the product. They are trained and ready to serve you at the best. The warranty is valid for 6 years from
+                the date of purchase. The warranty does not apply to damage caused by incorrect installation or abnormal
+                wear and tear. The company gives no warranty against damage to any surface due to incorrect removal and
+                installation of the product. The products are suitable for 10-12 Hours Daily operation. Usage of product
+                for 24 Hours a day would void the warranty. This product is warranted for manufacturing defects only.
+            </p>
+        </div>
+
+        <!-- QR Code and Warnings -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="flex items-start">
+                <div class="bg-red-500 h-32 w-32 flex items-center justify-center mb-4">
+                    <img src="qr-code.png" alt="QR Code" class="object-cover">
+                </div>
+                <div class="flex-col p-6">
+                    <h3 class="text-xl font-bold uppercase">Multi-Language Manual QR Code</h3>
+                    <p class="text-gray-700">Please scan the QR code to access the manual in multiple languages.</p>
+                </div>
+            </div>
+            <div class="flex flex items-start">
+                <div class="bg-red-500 h-16 w-16 flex items-center justify-center mb-4">
+                    <img src="dust-bin.png" alt="Warning Icon" class="h-full w-full object-cover">
+                </div>
+                <p class="text-gray-700 font-bold">This marking indicates that this product should not be disposed of
+                    with other household wastes.</p>
+                <div class="h-16 w-16 flex items-center justify-center my-4">
+                    <img src="electric.png" alt="Caution Icon" class="object-cover">
+                </div>
+                <p class="text-gray-700 font-bold p-6">Caution, Risk of electric shock</p>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page-break mt-8">
+            <!-- Warnings -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 uppercase">Warning</h3>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>Please make sure to turn off the power before starting the installation.</li>
+                    <li>Installation should only be done by a certified electrician.</li>
+                    <li>Terminal block not included.</li>
+                    <li>The light source of this luminaire is not replaceable; when the light source reaches its end of
+                        life the whole luminaire should be replaced.</li>
+                    <li>If the external flexible cable or cord of this luminaire is damaged, it shall be exclusively
+                        replaced by the manufacturer or his service agent or a similar qualified person in order to
+                        avoid a hazard.</li>
+                    <li>For indoor use only.</li>
+                </ul>
+            </div>
+
+            <!-- Installation Instructions -->
+            <div class="mb-8 mx-auto max-w-screen-lg bg-gray-100 p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold mb-6 uppercase text-center text-gray-800">Installation Instructions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center w-full max-w-xs">
+                        <div class="relative bg-white h-64 w-64 flex items-center justify-center mb-4 border border-gray-300 rounded-xl shadow-md">
+                            <img src="inst-1.png" alt="Step 1 Image" class="h-full w-full object-cover rounded-xl">
+                            <span class="absolute top-2 left-2 bg-black text-white text-lg font-bold px-2 py-1 rounded-md">1</span>
+                        </div>
+                        <p class="text-gray-700 text-center font-medium">1. Make a hole in the ceiling</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center w-full max-w-xs">
+                        <div class="relative bg-white h-64 w-64 flex items-center justify-center mb-4 border border-gray-300 rounded-xl shadow-md">
+                            <img src="inst-2.png" alt="Step 2 Image" class="h-full w-full object-cover rounded-xl">
+                            <span class="absolute top-2 left-2 bg-black text-white text-lg font-bold px-2 py-1 rounded-md">2</span>
+                        </div>
+                        <p class="text-gray-700 text-center font-medium">2. Put the panel onto the ceiling</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center w-full max-w-xs">
+                        <div class="relative bg-white h-64 w-64 flex items-center justify-center mb-4 border border-gray-300 rounded-xl shadow-md">
+                            <img src="inst-3.png" alt="Step 3 Image" class="h-full w-full object-cover rounded-xl">
+                            <span class="absolute top-2 left-2 bg-black text-white text-lg font-bold px-2 py-1 rounded-md">3</span>
+                        </div>
+                        <p class="text-gray-700 text-center font-medium">3. Wiring the DC cable of the panel to the power supply. And wiring the AC source cable to the power supply.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center w-full max-w-xs">
+                        <div class="relative bg-white h-64 w-64 flex items-center justify-center mb-4 border border-gray-300 rounded-xl shadow-md">
+                            <img src="inst-4.png" alt="Step 4 Image" class="h-full w-full object-cover rounded-xl">
+                            <span class="absolute top-2 left-2 bg-black text-white text-lg font-bold px-2 py-1 rounded-md">4</span>
+                        </div>
+                        <p class="text-gray-700 text-center font-medium">4. Turn on the switch and test the fixture light.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer for Page 2 -->
+            <div class="border rounded-xl border-gray-800 m-10 p-10 bg-gray-100">
+                <div class="mb-4 text-center space-y-6">
+                    <!-- Section 1 -->
+                    <div class="text-center">
+                        <p class="text-gray-600 text-sm uppercase border-gray-800 border-b py-2"> <strong>V-TAC Europe LTD.</strong>
+                            In case of any query/issue with the product, please reach out to us at:
+                            support@v-tac.eu, For more product range and inquiries,
+                            please contact our distributor or nearest dealers.
+                            V-TAC Europe LTD, Bulgaria, Plovdiv 4000, bul.L.Karavelov 9B
+                        </p>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <p class="text-gray-600 text-sm uppercase border-gray-800 border-b py-2">
+                        <strong>V-TAC West Europe LTD.</strong> In case of any query/issue with the product,
+                        please reach out to us at: support@v-tac.eu For more product range and
+                        inquiries, please contact our distributor or nearest dealers.
+                        V-TAC West Europe LTD, Ground Floor, 71 Lower Baggot Street,
+                        Dublin 02, Ireland D02 P593.
+                    </p>
+
+                    <!-- Section 3 -->
+                    <p class="text-gray-600 text-sm uppercase mt-4">
+                        <strong>V-TAC UK LTD.</strong> In case of any query/issue with the product,
+                        please reach out to us at support@vtacexports.com,
+                        V-TAC, 5A, Tungsten Park, Downs Road, Witney, Oxfordshire, OX29 0AX.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store the original page content
+        let originalContent = null;
+        let totalTranslatableElements = 0;
+        let translatedElements = 0;
+
+        // Access jsPDF from the global scope
+        const { jsPDF } = window.jspdf;
+
+        // Function to split text into sentences
+        function splitIntoSentences(text) {
+            // Split on periods followed by a space or end of string, preserving the period
+            const sentences = text.match(/[^.]+(?:\.|$)(?:\s+|$)/g) || [];
+            return sentences.map(sentence => sentence.trim()).filter(sentence => sentence);
+        }
+
+        // Function to extract all text content from an element, including child nodes
+        function extractText(element) {
+            let text = '';
+            for (let node of element.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    text += node.textContent;
+                } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('no-translate')) {
+                    text += extractText(node);
+                }
+            }
+            return text.trim();
+        }
+
+        // Function to collect all translatable elements
+        function collectTranslatableElements(element) {
+            let elements = [];
+            if (!element) return elements;
+
+            // Skip non-translatable sections
+            if (element.classList?.contains('no-print') || element.id === 'progressContainer') {
+                return elements;
+            }
+
+            // Check if the element itself is a translatable tag
+            const translatableTags = ['P', 'H1', 'H2', 'H3', 'TD', 'TH', 'LI', 'SPAN',];
+            if (translatableTags.includes(element.tagName)) {
+                const text = extractText(element);
+                // Skip purely numeric/symbol content or specific non-translatable fields
+                if (text && !text.match(/^[0-9\s°≥≤%,\-+:]+$/)) {
+                    // For table cells, only translate the label (TH), not the data (TD) unless it's descriptive
+                    if (element.tagName === 'TD') {
+                        const row = element.closest('tr');
+                        const th = row?.querySelector('th');
+                        const thText = th ? extractText(th) : '';
+                        // Only include TD if it's not purely technical data
+                        if (!['Model', 'SKU', 'Power', 'Lumens', 'Beam Angle', 'CRI', 'PF', 'Life Span', 'On/Off Cycle', 'IP Rating', 'Operating Temperature', 'Input Voltage', 'Dimension'].includes(thText)) {
+                            elements.push(element);
+                        }
+                    } else {
+                        elements.push(element);
+                    }
+                }
+            }
+
+            // Recursively check child elements
+            for (let child of element.children) {
+                elements.push(...collectTranslatableElements(child));
+            }
+
+            return elements;
+        }
+
+        // Function to save the original content of the page and count translatable elements
+        function saveOriginalContent() {
+            originalContent = document.querySelector('.container').innerHTML;
+            const translatableElements = collectTranslatableElements(document.querySelector('.container'));
+            totalTranslatableElements = translatableElements.length;
+        }
+
+        // Function to update progress bar
+        function updateProgress() {
+            const progressBar = document.getElementById('translationProgress');
+            const tickMark = document.getElementById('tickMark');
+            const percentage = totalTranslatableElements > 0 ? (translatedElements / totalTranslatableElements) * 100 : 0;
+            progressBar.style.width = `${percentage}%`;
+            progressBar.setAttribute('aria-valuenow', percentage);
+
+            // If translation is complete, change color to green and show tick mark
+            if (percentage >= 100) {
+                progressBar.classList.remove('bg-blue-500');
+                progressBar.classList.add('bg-green-500');
+                tickMark.style.display = 'block';
+            } else {
+                progressBar.classList.remove('bg-green-500');
+                progressBar.classList.add('bg-blue-500');
+                tickMark.style.display = 'none';
+            }
+        }
+
+        // Function to show progress bar
+        function showProgress() {
+            const progressContainer = document.getElementById('progressContainer');
+            progressContainer.style.display = 'block';
+            translatedElements = 0;
+            updateProgress();
+        }
+
+        // Function to hide progress bar
+        function hideProgress() {
+            const progressContainer = document.getElementById('progressContainer');
+            progressContainer.style.display = 'none';
+        }
+
+        // Function to set translated text back into the element while preserving structure
+        function setTranslatedText(element, translatedText) {
+            // If the element has child elements (e.g., <strong>), preserve them
+            if (element.children.length > 0) {
+                // Reconstruct the element's content with translated text
+                const originalText = extractText(element);
+                const regex = new RegExp(originalText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                const newHTML = element.innerHTML.replace(regex, translatedText);
+                element.innerHTML = newHTML;
+            } else {
+                // Clear the element and set the translated text
+                while (element.firstChild) {
+                    element.removeChild(element.firstChild);
+                }
+                element.appendChild(document.createTextNode(translatedText));
+            }
+        }
+
+        // Function to translate text using Google Translate API
+        async function translateText(text, targetLang) {
+            if (!text) return text;
+
+            try {
+                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await response.json();
+                if (data && data[0] && data[0][0]) {
+                    return data[0][0][0]; // Extract translated text
+                }
+                return text; // Fallback to original text if translation fails
+            } catch (error) {
+                console.error('Translation error:', error);
+                return text; // Fallback to original text on error
+            }
+        }
+
+        // Function to translate an entire element's text content
+        async function translateElement(element, targetLang) {
+            const text = extractText(element);
+            if (text && !text.match(/^[0-9\s°≥≤%,\-+:]+$/)) {
+                // Split the text into sentences
+                const sentences = splitIntoSentences(text);
+                if (sentences.length === 0) return;
+
+                // Translate each sentence
+                const translatedSentences = [];
+                for (let sentence of sentences) {
+                    const translatedSentence = await translateText(sentence, targetLang);
+                    translatedSentences.push(translatedSentence);
+                }
+
+                // Join the translated sentences back together
+                const translatedText = translatedSentences.join(' ');
+                setTranslatedText(element, translatedText);
+                translatedElements++;
+                updateProgress();
+            }
+        }
+
+        // Function to reset the page content to its original state
+        function resetPageContent() {
+            const container = document.querySelector('.container');
+            if (originalContent) {
+                container.innerHTML = originalContent;
+            }
+        }
+
+        // Function to download the page as a PDF using jsPDF and html2canvas
+        async function downloadPDF() {
+            try {
+                const element = document.querySelector('.container');
+                if (!element) {
+                    throw new Error('Container element not found');
+                }
+
+                // Temporarily hide the language dropdown, download button, and print button
+                const headerSection = document.querySelector('.absolute.top-5.right-5');
+                if (headerSection) {
+                    headerSection.style.display = 'none';
+                }
+
+                // Use html2canvas to capture the element as an image
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    width: element.scrollWidth,
+                    height: element.scrollHeight
+                });
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+
+                // Create a new jsPDF instance
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'px',
+                    format: 'a4'
+                });
+
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+
+                // Calculate the scaling factor to fit the content within the PDF page
+                const widthRatio = pageWidth / imgWidth;
+                const heightRatio = pageHeight / imgHeight;
+                const ratio = Math.min(widthRatio, heightRatio);
+
+                const scaledWidth = imgWidth * ratio;
+                const scaledHeight = imgHeight * ratio;
+
+                // Center the image on the PDF page
+                const x = (pageWidth - scaledWidth) / 2;
+                const y = (pageHeight - scaledHeight) / 2;
+
+                // Add the image to the PDF
+                pdf.addImage(imgData, 'JPEG', x, y, scaledWidth, scaledHeight);
+
+                // If the content is taller than one page, add additional pages
+                if (scaledHeight > pageHeight) {
+                    let position = pageHeight;
+                    while (position < scaledHeight) {
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'JPEG', x, y - position, scaledWidth, scaledHeight);
+                        position += pageHeight;
+                    }
+                }
+
+                // Save the PDF
+                pdf.save('V-TAC_Instruction_Manual.pdf');
+
+                // Restore the header section
+                if (headerSection) {
+                    headerSection.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                alert('Error: Unable to generate PDF. Please try again.');
+                const headerSection = document.querySelector('.absolute.top-5.right-5');
+                if (headerSection) {
+                    headerSection.style.display = 'flex';
+                }
+            }
+        }
+
+        // Function to trigger the print dialog
+        function printPage() {
+            window.print();
+        }
+
+        // Function to translate the entire page
+        async function translatePage(targetLang) {
+            const container = document.querySelector('.container');
+
+            // Always reset to the original content first
+            resetPageContent();
+
+            if (targetLang === 'en') {
+                // If the target language is English, no translation needed
+                hideProgress();
+                return;
+            }
+
+            // Show progress bar and reset translated elements count
+            showProgress();
+
+            // Collect all translatable elements after resetting
+            const translatableElements = collectTranslatableElements(container);
+
+            // Translate each element
+            for (let element of translatableElements) {
+                await translateElement(element, targetLang);
+            }
+
+            // Hide progress bar after translation completes
+            setTimeout(hideProgress, 1000);
+        }
+
+        // Add event listener to dropdown
+        document.getElementById('languageDropdown').addEventListener('change', async (e) => {
+            const targetLang = e.target.value;
+            await translatePage(targetLang);
+        });
+
+        // Use event delegation for the Download PDF and Print buttons
+        document.body.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'downloadPDFButton') {
+                downloadPDF();
+            } else if (e.target && e.target.id === 'printButton') {
+                printPage();
+            }
+        });
+
+        // Save the original content when the page loads
+        window.addEventListener('load', saveOriginalContent);
+    </script>
+</body>
+
+</html>
